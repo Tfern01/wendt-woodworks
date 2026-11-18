@@ -80,21 +80,22 @@
   }
   .site-brand:hover{color:var(--green)}
   .menu-panel{
-    position:absolute;top:calc(100% + 6px);left:16px;z-index:60;
-    min-width:210px;padding:6px;
+    position:absolute;top:calc(100% + 6px);left:16px;right:16px;z-index:60;
+    width:auto;padding:6px;
     background:var(--surface);border:1px solid var(--line);border-radius:12px;
     box-shadow:var(--shadow);
-    display:flex;flex-direction:column;
+    display:flex;flex-direction:row;justify-content:space-between;align-items:stretch;gap:4px;
   }
   .menu-panel a{
     color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem;
     padding:10px 12px;border-radius:8px;min-height:40px;display:flex;align-items:center;
+    flex:1 1 0;justify-content:center;text-align:center;white-space:nowrap;
   }
   .menu-panel a:hover{background:var(--surface-2)}
   @media (max-width:560px){
     .topnav .wrap{gap:8px}
     .site-brand{font-size:1.02rem}
-    .menu-panel{left:10px}
+    .menu-panel{left:10px;right:10px}
   }
 
   /* ---------- hero ---------- */
@@ -374,11 +375,14 @@
   /* ---------- footer ---------- */
   footer{background:#243a21;color:#d8dbc6}
   @media (prefers-color-scheme: dark){ footer{background:#1b2817} }
-  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;padding:30px 0 22px}
+  .foot-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:28px;padding:30px 0 22px}
   .foot-brand .fname{font-family:"Bitter",serif;font-weight:800;font-size:1.3rem;color:#fff;display:block;margin-bottom:6px}
   .foot-brand p{margin:0;font-size:.93rem;line-height:1.5;max-width:26rem}
   footer h4{margin:0 0 8px;font-size:.82rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff}
-  .foot-links{list-style:none;margin:0;padding:0}
+  .foot-links{list-style:none;margin:0;padding:0;display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 20px;width:100%}
+  .foot-links li{flex:1 1 auto}
+  .foot-links li:nth-child(2){text-align:center}
+  .foot-links li:last-child{text-align:right}
   .foot-links a{
     color:#d8dbc6;text-decoration:none;font-size:.95rem;font-weight:600;
     display:inline-flex;align-items:center;min-height:34px;padding:3px 0;
