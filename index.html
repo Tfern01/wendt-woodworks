@@ -64,7 +64,7 @@
     backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
   }
-  .topnav .wrap{position:relative;display:flex;align-items:center;gap:10px;height:52px}
+  .topnav .wrap{position:relative;display:grid;grid-template-columns:40px 1fr 40px;align-items:center;column-gap:10px;height:52px}
   .menu-btn{
     width:40px;height:40px;min-height:40px;flex:none;padding:0;
     display:inline-flex;align-items:center;justify-content:center;
@@ -75,7 +75,8 @@
   .site-brand{
     font-family:"Bitter",Georgia,serif;font-weight:800;font-size:1.12rem;letter-spacing:.01em;
     color:var(--ink);text-decoration:none;line-height:1;white-space:nowrap;
-    display:inline-flex;align-items:center;min-height:40px;
+    display:inline-flex;align-items:center;justify-content:center;min-height:40px;
+    justify-self:center;text-align:center;
   }
   .site-brand:hover{color:var(--green)}
   .menu-panel{
