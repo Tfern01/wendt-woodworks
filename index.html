@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="color-scheme" content="light dark" />
+<meta name="color-scheme" content="light" />
 <link rel="icon" href="data:," />
 <title>Wendt Woodworks — Hand-built Planters</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --bg:#faf7f1;
+    --bg:#ffffff;
     --surface:#ffffff;
     --surface-2:#f1eadd;
     --ink:#22301f;
@@ -25,22 +25,6 @@
     --danger:#b3352b;
     --shadow:0 10px 30px rgba(46,38,20,.12);
     --radius:14px;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --bg:#171a14;
-      --surface:#21261d;
-      --surface-2:#2a2f23;
-      --ink:#eef0e4;
-      --ink-soft:#b9c0ab;
-      --line:#3d4433;
-      --green:#7fae72;
-      --green-deep:#a8c79d;
-      --cedar:#d99a55;
-      --cedar-soft:#3a2f1e;
-      --gold:#d99a3d;
-      --shadow:0 10px 30px rgba(0,0,0,.45);
-    }
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -153,12 +137,10 @@
     padding:8px 12px;min-height:38px;font-weight:700;width:100%;
   }
   .btn-card:hover{background:var(--green-deep)}
-  @media (prefers-color-scheme: dark){ .btn-card{color:#131709} .btn-card:hover{color:#131709} }
   .card-custom{
     background:var(--green);color:#f2f0e2;border-color:transparent;
     align-items:flex-start;justify-content:center;padding:16px;gap:6px;
   }
-  @media (prefers-color-scheme: dark){ .card-custom{background:#2c3a26} }
   .card-custom h3{color:#fff;font-size:1.25rem}
   .card-custom p{color:#d8dbc6}
   .card-custom .btn-card{background:var(--gold);color:#241a05;width:auto;padding:8px 16px}
@@ -179,7 +161,6 @@
     border-radius:999px;padding:6px 13px;min-height:36px;font-weight:600;font-size:.9rem;
   }
   .chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
-  @media (prefers-color-scheme: dark){ .chip[aria-pressed="true"]{color:#131709} }
   .style-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
   .style-card{
     text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);
@@ -251,7 +232,6 @@
     background:linear-gradient(180deg, #e9f0e2 0%, #dde8cf 70%, #cfdcba 100%);
     border-radius:8px;padding:6px 6px 2px;margin-bottom:8px;
   }
-  @media (prefers-color-scheme: dark){ .pv-stage{background:linear-gradient(180deg,#232b1e,#1c2417 70%,#182012)} }
   .pv-stage svg{width:100%;height:auto;display:block}
   .pv-dims{text-align:center;font-weight:700;font-size:.88rem;padding:4px 0 6px;color:var(--ink)}
   .pv-list{list-style:none;margin:0;padding:0;font-size:.88rem}
@@ -359,7 +339,6 @@
   .confirm-actions{display:flex;flex-wrap:wrap;gap:10px}
   .btn-green{background:var(--green);color:#fff}
   .btn-green:hover{background:var(--green-deep)}
-  @media (prefers-color-scheme: dark){ .btn-green{color:#131709} }
   .btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
   .btn-outline:hover{border-color:var(--ink-soft)}
   .copy-ok{font-weight:700;color:var(--green);font-size:.92rem;align-self:center;display:none}
@@ -374,7 +353,6 @@
 
   /* ---------- footer ---------- */
   footer{background:#243a21;color:#d8dbc6}
-  @media (prefers-color-scheme: dark){ footer{background:#1b2817} }
   .foot-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:28px;padding:30px 0 22px}
   .foot-brand .fname{font-family:"Bitter",serif;font-weight:800;font-size:1.3rem;color:#fff;display:block;margin-bottom:6px}
   .foot-brand p{margin:0;font-size:.93rem;line-height:1.5;max-width:26rem}
@@ -449,7 +427,6 @@
     background:linear-gradient(180deg, #e9f0e2 0%, #dde8cf 70%, #cfdcba 100%);
     border-radius:8px;padding:6px 6px 2px;margin-bottom:10px;
   }
-  @media (prefers-color-scheme: dark){ .qs-stage{background:linear-gradient(180deg,#232b1e,#1c2417 70%,#182012)} }
   .qs-stage svg{width:100%;height:auto;display:block}
   .qs-stage .pv-dims{padding-bottom:4px}
   .build-summary .btn{width:100%;margin-top:10px;padding:9px 14px;min-height:40px}
