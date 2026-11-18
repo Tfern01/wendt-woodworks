@@ -371,10 +371,33 @@
   .about-facts li{padding:5px 0;border-top:1px dashed var(--line)}
   .about-facts b{color:var(--ink);font-weight:600}
 
-  footer{padding:16px 0 20px;border-top:1px solid var(--line)}
-  footer .wrap{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;justify-content:space-between}
-  footer .fname{font-family:"Bitter",serif;font-weight:800;font-size:1.05rem}
-  footer p{margin:0;color:var(--ink-soft);font-size:.92rem}
+  /* ---------- footer ---------- */
+  footer{background:#243a21;color:#d8dbc6}
+  @media (prefers-color-scheme: dark){ footer{background:#1b2817} }
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px;padding:30px 0 22px}
+  .foot-brand .fname{font-family:"Bitter",serif;font-weight:800;font-size:1.3rem;color:#fff;display:block;margin-bottom:6px}
+  .foot-brand p{margin:0;font-size:.93rem;line-height:1.5;max-width:26rem}
+  footer h4{margin:0 0 8px;font-size:.82rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#fff}
+  .foot-links{list-style:none;margin:0;padding:0}
+  .foot-links a{
+    color:#d8dbc6;text-decoration:none;font-size:.95rem;font-weight:600;
+    display:inline-flex;align-items:center;min-height:34px;padding:3px 0;
+  }
+  .foot-links a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+  .foot-facts{list-style:none;margin:0;padding:0;font-size:.95rem;display:flex;flex-direction:column;gap:8px}
+  .foot-facts li{display:flex;gap:8px;align-items:flex-start;line-height:1.4}
+  .foot-facts svg{flex:none;margin-top:2px}
+  .foot-bottom{
+    border-top:1px solid rgba(255,255,255,.18);padding:14px 0 18px;
+    display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:space-between;
+    font-size:.88rem;
+  }
+  .foot-bottom p{margin:0}
+  .foot-bottom a{color:#d8dbc6;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;min-height:32px}
+  .foot-bottom a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+  @media (max-width:700px){
+    .foot-grid{grid-template-columns:1fr;gap:18px;padding:24px 0 18px}
+  }
   [hidden]{display:none!important}
   .builder-top{background:var(--surface-2);border-bottom:1px solid var(--line)}
   .builder-top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:4px;padding-bottom:4px}
@@ -831,8 +854,32 @@
 
 <footer>
   <div class="wrap">
-    <span class="fname">Wendt Woodworks</span>
-    <p>Hand-built raised beds &amp; planter boxes · Built to order, one at a time</p>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <span class="fname">Wendt Woodworks</span>
+        <p>Hand-built raised beds &amp; planter boxes — built to order, one at a time, for local clients.</p>
+      </div>
+      <nav aria-label="Footer">
+        <h4>Explore</h4>
+        <ul class="foot-links">
+          <li><a href="#planters">Products</a></li>
+          <li><a href="#/build">Build Yours</a></li>
+          <li><a href="#/about">About</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h4>The shop</h4>
+        <ul class="foot-facts">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d99a3d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Built to order</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d99a3d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Solid wood, no kits</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d99a3d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Local delivery or pickup</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>© 2026 Wendt Woodworks. All rights reserved.</p>
+      <a href="#/">Back to top ↑</a>
+    </div>
   </div>
 </footer>
 
