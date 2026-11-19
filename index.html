@@ -762,6 +762,7 @@
           <li><span>Finish</span><span id="pvFinish">—</span></li>
           <li><span>Add-ons</span><span id="pvAddons">—</span></li>
           <li><span>Quantity</span><span id="pvQty">—</span></li>
+          <li><span>Handoff</span><span id="pvHandoff">—</span></li>
           <li><span>Soil to fill</span><span id="pvSoil">—</span></li>
         </ul>
         <div class="pv-note" id="pvSoilNote">—</div>
@@ -805,7 +806,7 @@
         <div class="field">
           <label>Handoff</label>
           <div class="seg" role="group" aria-label="Delivery or pickup">
-            <button class="chip" type="button" id="handoffDelivery" aria-pressed="true">Local delivery</button>
+            <button class="chip" type="button" id="handoffDelivery" aria-pressed="true">Local delivery +$50</button>
             <button class="chip" type="button" id="handoffPickup" aria-pressed="false">I'll pick it up</button>
           </div>
         </div>
@@ -910,6 +911,10 @@
     preset:"4x8",
     handoff:"Local delivery"
   };
+  var DELIVERY_FEE = 50;
+  function isDelivery(){ return state.handoff === "Local delivery"; }
+  function handoffSummary(){ return isDelivery() ? "Local delivery — +$" + DELIVERY_FEE + " delivery" : "Pickup — free"; }
+  function deliveryLine(){ return isDelivery() ? "Delivery: +$" + DELIVERY_FEE + " delivery" : "Delivery: Pickup — free"; }
   var hasBuilt = false;
   var quoteNoticePending = false;
   function markBuilt(){ hasBuilt = true; var n = $("buildNotice"); if (n) n.hidden = true; }
@@ -1027,6 +1032,7 @@
     state.handoff = v;
     $("handoffDelivery").setAttribute("aria-pressed", v === "Local delivery" ? "true" : "false");
     $("handoffPickup").setAttribute("aria-pressed", v === "Pickup" ? "true" : "false");
+    sync();
   }
   $("handoffDelivery").addEventListener("click", function(){ setHandoff("Local delivery"); });
   $("handoffPickup").addEventListener("click", function(){ setHandoff("Pickup"); });
@@ -1052,7 +1058,8 @@
       "Finish: " + finishObj().name,
       "Add-ons: " + (addonNames().length ? addonNames().join(", ") : "None"),
       "Quantity: " + state.qty,
-      "Soil to fill: about " + s.cuft.toFixed(1).replace(/\.0$/,"") + " cu ft (roughly " + s.bags + " × 1.5 cu ft bags)"
+      "Soil to fill: about " + s.cuft.toFixed(1).replace(/\.0$/,"") + " cu ft (roughly " + s.bags + " × 1.5 cu ft bags)",
+      deliveryLine()
     ];
     return lines;
   }
@@ -1163,6 +1170,7 @@
     $("pvFinish").textContent = finishObj().name;
     $("pvAddons").textContent = addonNames().length ? addonNames().join(", ") : "None";
     $("pvQty").textContent = state.qty + (state.qty > 1 ? " planters" : " planter");
+    var pvH = $("pvHandoff"); if (pvH) pvH.textContent = handoffSummary();
     $("pvSoil").textContent = "≈ " + s.cuft.toFixed(1).replace(/\.0$/, "") + " cu ft";
     $("pvSoilNote").innerHTML = "Filling it takes about <b>" + s.cuft.toFixed(1).replace(/\.0$/, "") + " cubic feet</b> of soil — roughly <b>" + s.bags + " bags</b> at 1.5 cu ft each" + (state.qty > 1 ? ", per planter" : "") + ".";
     drawPreview();
@@ -1171,7 +1179,7 @@
     $("qsText").textContent = summaryLines().join("\n");
     var qd = $("qsDims"); if (qd) qd.textContent = $("pvDims").textContent;
     var cqN = $("cqName"); if (cqN) cqN.textContent = name;
-    var cqS = $("cqSummary"); if (cqS) cqS.textContent = fmtFt(state.len) + " ft × " + fmtFt(state.wid) + " ft × " + state.hei + "″ deep · Qty " + state.qty + " · Soil ≈ " + s.cuft.toFixed(1).replace(/\.0$/, "") + " cu ft";
+    var cqS = $("cqSummary"); if (cqS) cqS.textContent = fmtFt(state.len) + " ft × " + fmtFt(state.wid) + " ft × " + state.hei + "″ deep · Qty " + state.qty + " · Soil ≈ " + s.cuft.toFixed(1).replace(/\.0$/, "") + " cu ft · " + (isDelivery() ? "+$" + DELIVERY_FEE + " delivery" : "Pickup — free");
   }
 
   /* ---------- quote form ---------- */
@@ -1208,7 +1216,7 @@
       "Name: " + $("fName").value.trim(),
       "Contact: " + $("fContact").value.trim(),
       "City: " + ($("fCity").value.trim() || "—"),
-      "Handoff: " + state.handoff,
+      "Handoff: " + handoffSummary(),
       ""
     ].concat(lines);
     var notes = $("fNotes").value.trim();
