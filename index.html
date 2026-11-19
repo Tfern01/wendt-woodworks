@@ -155,116 +155,153 @@
   #build .section-head{margin-bottom:10px}
   #build .section-head h2{margin-bottom:6px}
   #build .section-head p{font-size:.98rem}
-  .builder{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;align-items:start}
-  .controls{display:flex;flex-direction:column;gap:12px}
-  .ctl-group h3{font-size:.98rem;font-weight:700;margin-bottom:2px}
-  .ctl-group .hint{color:var(--ink-soft);font-size:.84rem;line-height:1.35;margin:0 0 6px}
-  .chip-row{display:flex;flex-wrap:wrap;gap:6px}
+  .builder{display:flex;flex-direction:column;gap:10px;align-items:stretch;max-width:920px;margin:0 auto}
+  .controls{display:flex;flex-direction:column;gap:7px;width:100%}
+  .ctl-group{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 9px}
+  .ctl-group h3{font-size:.8rem;font-weight:700;margin:0 0 5px;color:var(--ink-soft)}
+  .ctl-group .hint{color:var(--ink-soft);font-size:.8rem;line-height:1.3;margin:0 0 5px}
+  .ctl-inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .ctl-inline h3{margin:0;flex:none}
+  .chip-row{display:flex;flex-wrap:wrap;gap:5px}
   .chip{
-    border:1.5px solid var(--line);background:var(--surface);color:var(--ink);
-    border-radius:999px;padding:6px 13px;min-height:36px;font-weight:600;font-size:.9rem;
+    border:1px solid var(--line);background:var(--surface);color:var(--ink);
+    border-radius:999px;padding:3px 10px;min-height:26px;font-weight:600;font-size:.82rem;line-height:1.2;
   }
   .chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
-  .style-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .style-card{
-    text-align:left;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);
-    border-radius:10px;padding:9px 11px;min-height:40px;
+  /* Size toggle button + swipeable panel directly under it */
+  .size-btn{
+    width:100%;display:flex;align-items:center;gap:8px;
+    background:var(--green);color:#fff;border:0;border-radius:9px;
+    padding:6px 12px;min-height:34px;font-weight:700;font-size:.9rem;text-align:left;
   }
-  .style-card b{display:block;font-size:.94rem;margin-bottom:2px}
-  .style-card span{font-size:.81rem;color:var(--ink-soft);line-height:1.35;display:block}
-  .style-card[aria-pressed="true"]{border-color:var(--green);box-shadow:0 0 0 2px var(--green) inset}
-  .dims-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .dim-field label{display:block;font-weight:600;font-size:.85rem;margin-bottom:4px}
+  .size-btn:hover{background:var(--green-deep)}
+  .size-btn .size-btn-label{font-weight:700}
+  .size-btn .size-btn-value{font-weight:600;opacity:.92}
+  .size-btn .size-btn-chev{margin-left:auto;font-size:.85rem;line-height:1;transition:transform .15s ease}
+  .size-btn[aria-expanded="true"] .size-btn-chev{transform:rotate(180deg)}
+  .size-panel{margin-top:7px}
+  .size-strip{
+    display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:2px 2px 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .size-strip::-webkit-scrollbar{display:none}
+  .size-tile{
+    flex:0 0 92px;scroll-snap-align:start;text-align:center;
+    border:1.5px solid var(--line);background:var(--surface);color:var(--ink);
+    border-radius:10px;padding:6px 6px 5px;min-height:48px;
+  }
+  .size-tile b{display:block;font-size:.95rem;line-height:1.15}
+  .size-tile span{display:block;font-size:.7rem;color:var(--ink-soft);line-height:1.2;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .size-tile[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
+  .size-tile[aria-pressed="true"] span{color:#dfe6d2}
+  .size-tile:disabled{opacity:.38;cursor:not-allowed;background:var(--surface-2)}
+  .size-tile:disabled span{color:var(--ink-soft)}
+  .cap-note{font-size:.74rem;font-weight:700;color:var(--cedar);margin:0 0 5px}
+  .size-swipe-hint{font-size:.72rem;color:var(--ink-soft);margin:0 0 2px}
+  .style-row{display:flex;flex-wrap:wrap;gap:5px}
+  .style-card{
+    display:inline-flex;align-items:center;gap:5px;text-align:left;
+    border:1px solid var(--line);background:var(--surface);color:var(--ink);
+    border-radius:999px;padding:4px 11px;min-height:26px;
+  }
+  .style-card b{display:inline;font-size:.83rem;margin:0;font-weight:600}
+  .style-card span{display:none}
+  .style-card[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#fff}
+  .dims-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:2px}
+  .dim-field label{display:block;font-weight:600;font-size:.78rem;margin-bottom:3px}
   .dim-ctl{display:flex;align-items:stretch;gap:0}
   .dim-ctl button{
-    width:38px;min-height:38px;border:1.5px solid var(--line);background:var(--surface);
-    color:var(--ink);font-size:1.1rem;font-weight:700;line-height:1;
+    width:28px;min-height:28px;border:1px solid var(--line);background:var(--surface);
+    color:var(--ink);font-size:1rem;font-weight:700;line-height:1;padding:0;
   }
-  .dim-ctl button:first-child{border-radius:8px 0 0 8px;border-right:0}
-  .dim-ctl button:last-child{border-radius:0 8px 8px 0;border-left:0}
+  .dim-ctl button:first-child{border-radius:7px 0 0 7px;border-right:0}
+  .dim-ctl button:last-child{border-radius:0 7px 7px 0;border-left:0}
   .dim-ctl input{
-    flex:1;min-width:0;text-align:center;border:1.5px solid var(--line);background:var(--surface);
-    color:var(--ink);font:inherit;font-weight:700;font-size:1rem;padding:6px 2px;
+    flex:1;min-width:0;text-align:center;border:1px solid var(--line);background:var(--surface);
+    color:var(--ink);font:inherit;font-weight:700;font-size:.92rem;padding:3px 2px;min-height:28px;
     -moz-appearance:textfield;appearance:textfield;
   }
   .dim-ctl input::-webkit-outer-spin-button,.dim-ctl input::-webkit-inner-spin-button{-webkit-appearance:none}
-  .dim-unit{font-size:.78rem;color:var(--ink-soft);margin-top:3px}
-  .finish-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:6px}
+  .dim-unit{font-size:.7rem;color:var(--ink-soft);margin-top:2px}
+  /* Finish toggle button + expandable tile panel (mirrors Size) */
+  .finish-btn-swatch{
+    width:18px;height:18px;border-radius:50%;flex:none;
+    border:1.5px solid rgba(255,255,255,.7);
+    background-image:repeating-linear-gradient(0deg, rgba(0,0,0,.12) 0 1px, transparent 1px 5px);
+  }
+  .finish-panel{margin-top:7px}
+  .finish-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+  @media (min-width:640px){ .finish-grid{grid-template-columns:repeat(3,1fr)} }
   .finish{
-    display:flex;align-items:center;gap:8px;text-align:left;
+    display:flex;flex-direction:column;align-items:stretch;text-align:left;
     border:1.5px solid var(--line);background:var(--surface);color:var(--ink);
-    border-radius:10px;padding:7px 9px;min-height:40px;font-weight:600;font-size:.88rem;line-height:1.25;
+    border-radius:10px;padding:0;height:auto;
   }
-  .finish .swatch{
-    width:24px;height:24px;border-radius:6px;flex:none;
-    border:1px solid rgba(0,0,0,.22);
-    background-image:repeating-linear-gradient(0deg, rgba(0,0,0,.10) 0 2px, transparent 2px 8px);
+  .finish-color{
+    display:block;height:60px;flex:none;border-radius:8px 8px 0 0;
+    border-bottom:1px solid rgba(0,0,0,.18);
+    background-image:
+      repeating-linear-gradient(0deg, rgba(0,0,0,.09) 0 2px, transparent 2px 9px),
+      linear-gradient(180deg, rgba(255,255,255,.20), rgba(0,0,0,.10));
   }
+  .finish-text{display:block;padding:8px 10px 10px}
+  .finish-text b{display:block;font-size:.9rem;font-weight:700;line-height:1.3;white-space:normal}
+  .finish-cost{display:block;font-size:.82rem;font-weight:700;color:var(--cedar);line-height:1.35;margin-top:3px;white-space:normal}
   .finish[aria-pressed="true"]{border-color:var(--green);box-shadow:0 0 0 2px var(--green) inset}
-  .finish .fee-note{margin-left:auto;font-size:.8rem;font-weight:700;color:var(--cedar);white-space:nowrap}
-  .qty-ctl{display:flex;align-items:center;gap:0;width:max-content}
+  .finish[aria-pressed="true"] .finish-text b{color:var(--green-deep)}
+  .finish[aria-pressed="true"] .finish-color{box-shadow:inset 0 0 0 2px var(--green)}
+  .qty-ctl{display:inline-flex;align-items:center;gap:0;width:max-content}
   .qty-ctl button{
-    width:40px;min-height:38px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);
-    font-size:1.15rem;font-weight:700;
+    width:30px;min-height:26px;border:1px solid var(--line);background:var(--surface);color:var(--ink);
+    font-size:1rem;font-weight:700;padding:0;line-height:1;
   }
-  .qty-ctl button:first-child{border-radius:8px 0 0 8px;border-right:0}
-  .qty-ctl button:last-child{border-radius:0 8px 8px 0;border-left:0}
+  .qty-ctl button:first-child{border-radius:7px 0 0 7px;border-right:0}
+  .qty-ctl button:last-child{border-radius:0 7px 7px 0;border-left:0}
   .qty-ctl output{
-    min-width:50px;text-align:center;border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line);
-    background:var(--surface);font-weight:700;font-size:1rem;padding:6px 4px;
+    min-width:38px;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--surface);font-weight:700;font-size:.92rem;padding:3px 4px;
   }
+  .qty-handoff-row{display:flex;flex-wrap:wrap;gap:7px}
+  .qty-handoff-row .ctl-group{flex:1 1 260px}
+  .size-tile.custom-tile{border-style:dashed;border-color:var(--cedar);background:var(--cedar-soft);flex-basis:104px}
+  .size-tile.custom-tile span{color:#7a5220}
+  .size-tile.custom-tile[aria-pressed="true"]{background:var(--cedar);border-color:var(--cedar);color:#fff}
+  .size-tile.custom-tile[aria-pressed="true"] span{color:#f3e3cd}
+  .custom-note{font-size:.74rem;color:var(--ink-soft);margin:2px 0 0;line-height:1.3}
+  .custom-note b{color:var(--cedar)}
+  .custom-dims{background:var(--surface);border:1.5px dashed var(--cedar);border-radius:10px;padding:9px 10px;margin-bottom:10px}
+  .custom-dims>label{color:var(--cedar);margin-bottom:5px}
+  .custom-badge{display:inline-block;background:var(--cedar);color:#fff;font-size:.72rem;font-weight:700;border-radius:999px;padding:2px 8px;margin-bottom:6px}
 
-  /* preview panel — sticky on desktop, sticky compact bar on mobile */
+  /* preview — hero of the builder page: centered, large, not sticky */
   .preview{
     background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:12px;position:sticky;top:52px;
+    box-shadow:var(--shadow);padding:14px 16px 12px;width:100%;text-align:center;
   }
-  .preview h3{font-size:1.1rem;font-weight:700}
-  .preview .pv-name{color:var(--cedar);font-weight:700;margin:1px 0 6px;font-size:.92rem;line-height:1.35}
+  .preview h3{font-size:1.05rem;font-weight:700}
+  .preview .pv-name{color:var(--cedar);font-weight:700;margin:1px 0 8px;font-size:1rem;line-height:1.3}
   .pv-stage{
-    background:linear-gradient(180deg, #e9f0e2 0%, #dde8cf 70%, #cfdcba 100%);
-    border-radius:8px;padding:6px 6px 2px;margin-bottom:8px;
+    background:linear-gradient(180deg, #dcebd8 0%, #cfe0bd 46%, #b9cf9d 72%, #a8c48c 100%);
+    border-radius:10px;padding:10px 8px 4px;margin-bottom:8px;overflow:hidden;
   }
-  .pv-stage svg{width:100%;height:auto;display:block}
-  .pv-dims{text-align:center;font-weight:700;font-size:.88rem;padding:4px 0 6px;color:var(--ink)}
-  .pv-list{list-style:none;margin:0;padding:0;font-size:.88rem}
-  .pv-list li{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-top:1px dashed var(--line)}
-  .pv-list li:first-child{border-top:0}
+  .pv-stage svg{width:100%;height:auto;display:block;max-width:760px;margin:0 auto}
+  .pv-dims{text-align:center;font-weight:700;font-size:.92rem;padding:5px 0 6px;color:var(--ink)}
+  .pv-list{list-style:none;margin:0;padding:0;font-size:.84rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2px 16px;text-align:left}
+  .pv-list li{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-top:1px dashed var(--line)}
   .pv-list li span:first-child{color:var(--ink-soft)}
   .pv-list li span:last-child{font-weight:600;text-align:right}
   .pv-note{
-    background:var(--cedar-soft);border-radius:8px;padding:7px 9px;font-size:.84rem;margin-top:8px;line-height:1.35;
+    background:var(--cedar-soft);border-radius:8px;padding:7px 9px;font-size:.82rem;margin-top:8px;line-height:1.35;text-align:left;
   }
   .preview .btn{width:100%;margin-top:8px;padding:9px 14px;min-height:40px}
-  @media (max-width:900px){
-    .builder{grid-template-columns:1fr;gap:14px}
-    .controls{grid-row:2;display:flex;flex-direction:column;gap:16px}
-    /* Preview moves above the controls and sticks under the top nav,
-       so the drawing stays on screen while every control is adjusted. */
-    .preview{
-      grid-row:1;top:52px;z-index:40;padding:10px 12px 12px;
-      display:grid;grid-template-columns:132px minmax(0,1fr);column-gap:12px;align-items:start;
-      border-radius:0 0 12px 12px;
-    }
-    .preview h3{display:none}
-    .preview .pv-name{grid-column:1/-1;margin:0 0 6px;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .pv-stage{margin-bottom:0;padding:4px 4px 0}
-    .pv-stage svg{height:72px}
-    .pv-dims{font-size:.72rem;line-height:1.3;padding:2px 0 4px}
-    .pv-list{font-size:.8rem;min-width:0}
-    .pv-list li{padding:3px 0;gap:8px}
-    .pv-list li span:last-child{overflow-wrap:anywhere}
-    .pv-note{display:none}
-    .preview .btn{display:none}
-  }
   @media (max-width:560px){
-    #build{padding:28px 0 32px}
-    .dims-grid{grid-template-columns:repeat(3,1fr);gap:8px}
-    .dim-ctl button{width:30px}
-    .style-row{grid-template-columns:repeat(3,1fr);gap:7px}
-    .style-card{padding:8px;text-align:center}
-    .style-card span{display:none}
-    .finish-grid{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))}
+    #build{padding:14px 0 18px}
+    .preview{padding:10px 10px 10px}
+    .pv-stage{padding:6px 2px 2px}
+    .pv-list{grid-template-columns:1fr 1fr;font-size:.78rem}
+    .pv-note{display:none}
+    .dims-grid{grid-template-columns:repeat(3,1fr);gap:6px}
+    .size-tile{flex-basis:84px}
   }
 
   /* ---------- how it works ---------- */
@@ -413,14 +450,14 @@
     padding:9px 12px;font-size:.92rem;font-weight:600;margin-bottom:12px;line-height:1.4;
   }
   .controls-quote{
-    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-    padding:12px;display:flex;flex-direction:column;gap:8px;
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    padding:8px 10px;display:flex;flex-direction:column;gap:6px;
   }
-  .controls-quote p{margin:0;font-size:.92rem;color:var(--ink-soft);line-height:1.4}
+  .controls-quote p{margin:0;font-size:.85rem;color:var(--ink-soft);line-height:1.35}
   .controls-quote p b{color:var(--ink)}
   .controls-quote .btn{width:100%}
   .qs-stage{
-    background:linear-gradient(180deg, #e9f0e2 0%, #dde8cf 70%, #cfdcba 100%);
+    background:linear-gradient(180deg, #dcebd8 0%, #cfe0bd 46%, #b9cf9d 72%, #a8c48c 100%);
     border-radius:8px;padding:6px 6px 2px;margin-bottom:10px;
   }
   .qs-stage svg{width:100%;height:auto;display:block}
@@ -434,7 +471,6 @@
     .card img{height:120px}
     .shop-card img{height:170px}
     #build{padding:16px 0 18px}
-    .preview{top:52px}
   }
 
 </style>
@@ -649,94 +685,10 @@
     <div class="build-notice" id="buildNotice" hidden>Design your planter first — pick a size, style, and finish below, then press <b>Get Quote</b> and this exact build will be attached to your request.</div>
 
     <div class="builder">
-      <div class="controls">
-
-        <div class="ctl-group">
-          <h3>1 · Size</h3>
-          
-          <div class="chip-row" id="presetRow" role="group" aria-label="Preset sizes">
-            <button class="chip" type="button" data-size="4x8" aria-pressed="true">4 × 8 ft</button>
-            <button class="chip" type="button" data-size="4x4" aria-pressed="false">4 × 4 ft</button>
-            <button class="chip" type="button" data-size="2x4" aria-pressed="false">2 × 4 ft</button>
-            <button class="chip" type="button" data-size="2x6" aria-pressed="false">2 × 6 ft</button>
-            <button class="chip" type="button" data-size="3x6" aria-pressed="false">3 × 6 ft</button>
-            <button class="chip" type="button" data-size="2x8" aria-pressed="false">2 × 8 ft</button>
-            <button class="chip" type="button" data-size="custom" aria-pressed="false">Custom</button>
-          </div>
-          <div class="dims-grid" style="margin-top:10px">
-            <div class="dim-field">
-              <label for="lenIn">Length</label>
-              <div class="dim-ctl">
-                <button type="button" data-step="len:-0.5" aria-label="Decrease length">−</button>
-                <input id="lenIn" type="number" inputmode="decimal" min="1" max="16" step="0.5" value="8" />
-                <button type="button" data-step="len:0.5" aria-label="Increase length">+</button>
-              </div>
-              <div class="dim-unit">feet · 1–16</div>
-            </div>
-            <div class="dim-field">
-              <label for="widIn">Width</label>
-              <div class="dim-ctl">
-                <button type="button" data-step="wid:-0.5" aria-label="Decrease width">−</button>
-                <input id="widIn" type="number" inputmode="decimal" min="1" max="8" step="0.5" value="4" />
-                <button type="button" data-step="wid:0.5" aria-label="Increase width">+</button>
-              </div>
-              <div class="dim-unit">feet · 1–8</div>
-            </div>
-            <div class="dim-field">
-              <label for="heiIn">Depth</label>
-              <div class="dim-ctl">
-                <button type="button" data-step="hei:-2" aria-label="Decrease depth">−</button>
-                <input id="heiIn" type="number" inputmode="numeric" min="8" max="36" step="2" value="18" />
-                <button type="button" data-step="hei:2" aria-label="Increase depth">+</button>
-              </div>
-              <div class="dim-unit">inches deep · 8–36</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="ctl-group">
-          <h3>2 · Style</h3>
-          
-          <div class="style-row" id="styleRow" role="group" aria-label="Planter style">
-            <button class="style-card" type="button" data-style="raised" aria-pressed="true">
-              <b>Raised bed</b><span>Open bottom, sits on the ground. Best for in-ground vegetable gardens.</span>
-            </button>
-            <button class="style-card" type="button" data-style="box" aria-pressed="false">
-              <b>Planter box</b><span>Finished bottom with drainage. Made for patios, porches, and decks.</span>
-            </button>
-            <button class="style-card" type="button" data-style="legged" aria-pressed="false">
-              <b>Legged planter</b><span>Raised to about waist height on legs. Garden standing up.</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="ctl-group">
-          <h3>3 · Finish</h3>
-          
-          <div class="finish-grid" id="finishRow" role="group" aria-label="Finish"></div>
-        </div>
-
-        <div class="ctl-group">
-          <h3>4 · How many?</h3>
-          <div class="qty-ctl">
-            <button type="button" id="qtyMinus" aria-label="One fewer">−</button>
-            <output id="qtyOut" aria-live="polite">1</output>
-            <button type="button" id="qtyPlus" aria-label="One more">+</button>
-          </div>
-        </div>
-
-        <div class="controls-quote">
-          <p><b id="cqName">Your build</b><br /><span id="cqSummary">—</span></p>
-          <button class="btn btn-primary" type="button" id="builderQuoteBtn">Get Quote →</button>
-        </div>
-
-      </div>
-
       <aside class="preview" aria-label="Your build summary">
-        <h3>Your build</h3>
         <p class="pv-name" id="pvName">—</p>
         <div class="pv-stage">
-          <svg id="pvSvg" viewBox="0 0 340 230" role="img" aria-label="Drawing of your planter at the chosen size and finish"></svg>
+          <svg id="pvSvg" viewBox="0 0 560 340" role="img" aria-label="Drawing of your planter at the chosen size and finish"></svg>
           <div class="pv-dims" id="pvDims">—</div>
         </div>
         <ul class="pv-list">
@@ -747,8 +699,72 @@
           <li><span>Soil to fill</span><span id="pvSoil">—</span></li>
         </ul>
         <div class="pv-note" id="pvSoilNote">—</div>
-        <button class="btn btn-primary" type="button" data-get-quote>Get Quote →</button>
       </aside>
+
+      <div class="controls">
+
+        <div class="ctl-group ctl-size">
+          <button class="size-btn" type="button" id="sizeBtn" aria-expanded="false" aria-controls="sizePanel">
+            <span class="size-btn-label">Size</span><span aria-hidden="true">—</span><span class="size-btn-value" id="sizeBtnValue">4×8</span><span class="size-btn-chev" aria-hidden="true">▾</span>
+          </button>
+          <div class="size-panel" id="sizePanel" hidden>
+            <p class="size-swipe-hint">Swipe for sizes →</p>
+            <div class="size-strip" id="presetRow" role="group" aria-label="Preset sizes">
+              <button class="size-tile" type="button" data-size="4x8" aria-pressed="true"><b>4 × 8 ft</b><span>Largest</span></button>
+              <button class="size-tile" type="button" data-size="3x6" aria-pressed="false"><b>3 × 6 ft</b><span>Small yard</span></button>
+              <button class="size-tile" type="button" data-size="2x8" aria-pressed="false"><b>2 × 8 ft</b><span>Fence line</span></button>
+              <button class="size-tile" type="button" data-size="4x4" aria-pressed="false"><b>4 × 4 ft</b><span>Square</span></button>
+              <button class="size-tile" type="button" data-size="2x6" aria-pressed="false"><b>2 × 6 ft</b><span>Narrow</span></button>
+              <button class="size-tile" type="button" data-size="2x4" aria-pressed="false"><b>2 × 4 ft</b><span>Patio</span></button>
+              <button class="size-tile custom-tile" type="button" data-size="custom" aria-pressed="false"><b>Custom size</b><span>Quote only →</span></button>
+            </div>
+            <p class="custom-note"><b>Custom size is quote-only</b> — add your exact dims on the quote step.</p>
+            <p class="cap-note" id="sizeCapNote" hidden>Legged / box: sizes up to 4 × 4 ft only</p>
+          </div>
+        </div>
+
+        <div class="ctl-group ctl-inline">
+          <h3>Style</h3>
+          <div class="style-row" id="styleRow" role="group" aria-label="Planter style">
+            <button class="style-card" type="button" data-style="raised" aria-pressed="true"><b>Raised bed</b></button>
+            <button class="style-card" type="button" data-style="box" aria-pressed="false"><b>Planter box</b></button>
+            <button class="style-card" type="button" data-style="legged" aria-pressed="false"><b>Legged</b></button>
+          </div>
+        </div>
+
+        <div class="ctl-group ctl-finish">
+          <button class="size-btn finish-btn" type="button" id="finishBtn" aria-expanded="false" aria-controls="finishPanel">
+            <span class="finish-btn-swatch" id="finishBtnSwatch" aria-hidden="true"></span><span class="size-btn-label">Finish</span><span aria-hidden="true">—</span><span class="size-btn-value" id="finishBtnValue">Natural cedar</span><span class="size-btn-chev" aria-hidden="true">▾</span>
+          </button>
+          <div class="finish-panel" id="finishPanel" hidden>
+            <div class="finish-grid" id="finishRow" role="group" aria-label="Finish"></div>
+          </div>
+        </div>
+
+        <div class="qty-handoff-row">
+          <div class="ctl-group ctl-inline">
+            <h3>Qty</h3>
+            <div class="qty-ctl">
+              <button type="button" id="qtyMinus" aria-label="One fewer">−</button>
+              <output id="qtyOut" aria-live="polite">1</output>
+              <button type="button" id="qtyPlus" aria-label="One more">+</button>
+            </div>
+          </div>
+          <div class="ctl-group ctl-inline">
+            <h3>Handoff</h3>
+            <div class="chip-row" role="group" aria-label="Delivery or pickup">
+              <button class="chip" type="button" id="bhDelivery" aria-pressed="true">Delivery +$50</button>
+              <button class="chip" type="button" id="bhPickup" aria-pressed="false">Pickup</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls-quote">
+          <p><b id="cqName">Your build</b><br /><span id="cqSummary">—</span></p>
+          <button class="btn btn-primary" type="button" id="builderQuoteBtn">Get Quote →</button>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -765,11 +781,45 @@
   <div class="wrap">
     <div class="section-head">
       <h2>Get a quote on your build</h2>
-      <p>This is the planter you just designed. Check it, add your details, and send the request.</p>
+      <p id="quoteIntro">This is the planter you just designed. Check it, add your details, and send the request.</p>
     </div>
 
     <div class="quote-grid">
       <form id="quoteForm" novalidate>
+        <div class="custom-dims" id="customDims" hidden>
+          <span class="custom-badge">Custom size · quote only</span>
+          <p class="cap-note" id="customCapNote" hidden>Legged &amp; enclosed-bottom planters: 4 ft max each way</p>
+          <div class="dims-grid">
+            <div class="dim-field">
+              <label for="cLenIn">Length (ft)</label>
+              <div class="dim-ctl">
+                <button type="button" data-cstep="len:-0.5" aria-label="Decrease length">−</button>
+                <input id="cLenIn" type="number" inputmode="decimal" min="2" max="12" step="0.5" value="6" />
+                <button type="button" data-cstep="len:0.5" aria-label="Increase length">+</button>
+              </div>
+              <div class="dim-unit" id="cLenUnit">2–12 ft</div>
+            </div>
+            <div class="dim-field">
+              <label for="cWidIn">Width (ft)</label>
+              <div class="dim-ctl">
+                <button type="button" data-cstep="wid:-0.5" aria-label="Decrease width">−</button>
+                <input id="cWidIn" type="number" inputmode="decimal" min="2" max="4" step="0.5" value="3" />
+                <button type="button" data-cstep="wid:0.5" aria-label="Increase width">+</button>
+              </div>
+              <div class="dim-unit" id="cWidUnit">2–4 ft</div>
+            </div>
+            <div class="dim-field">
+              <label for="cHeiIn">Depth (in)</label>
+              <div class="dim-ctl">
+                <button type="button" data-cstep="hei:-2" aria-label="Decrease depth">−</button>
+                <input id="cHeiIn" type="number" inputmode="numeric" min="12" max="24" step="2" value="18" />
+                <button type="button" data-cstep="hei:2" aria-label="Increase depth">+</button>
+              </div>
+              <div class="dim-unit">12–24 in</div>
+            </div>
+          </div>
+          <p class="custom-note">These exact dims are attached to your quote request.</p>
+        </div>
         <div class="field">
           <label for="fName">Your name</label>
           <input type="text" id="fName" autocomplete="name" placeholder="First and last name" />
@@ -802,7 +852,7 @@
         <h3>Your designed build</h3>
         <p class="pv-name" id="qsName">—</p>
         <div class="qs-stage">
-          <svg id="qsSvg" viewBox="0 0 340 230" role="img" aria-label="Drawing of the planter attached to this quote"></svg>
+          <svg id="qsSvg" viewBox="0 0 560 340" role="img" aria-label="Drawing of the planter attached to this quote"></svg>
           <div class="pv-dims" id="qsDims">—</div>
         </div>
         <pre id="qsText">—</pre>
@@ -881,8 +931,31 @@
     finish:"cedar",
     qty:1,
     preset:"4x8",
+    isCustom:false,
     handoff:"Local delivery"
   };
+  var PRESET_LABELS = { "4x8":"4×8", "3x6":"3×6", "2x8":"2×8", "4x4":"4×4", "2x6":"2×6", "2x4":"2×4", "legged":"4×2 Legged", "custom":"Custom size" };
+  var SMALL_PRESETS = ["2x4", "4x4"];
+  function isRestrictedStyle(){ return state.style === "legged" || state.style === "box"; }
+  function clampCustom(){
+    state.len = clamp(state.len, 2, isRestrictedStyle() ? 4 : 12);
+    state.wid = clamp(state.wid, 2, 4);
+    state.hei = clamp(Math.round(state.hei), 12, 24);
+  }
+  /* Legged + enclosed-bottom box: max 4x4 footprint. Move an oversize
+     standard build to the 2x4 default; re-cap a custom build. */
+  function enforceSizeStyle(){
+    if (!isRestrictedStyle()) return;
+    if (state.isCustom){ clampCustom(); return; }
+    if (SMALL_PRESETS.indexOf(state.preset) === -1){
+      var p = PRESETS["2x4"];
+      state.len = p.len; state.wid = p.wid; state.hei = p.hei;
+      state.preset = "2x4";
+      $("presetRow").querySelectorAll(".size-tile").forEach(function(c){
+        c.setAttribute("aria-pressed", c.dataset.size === "2x4" ? "true" : "false");
+      });
+    }
+  }
   var DELIVERY_FEE = 50;
   var FINISH_FEE = 40;
   function finishFeeApplies(){ return !!finishObj().fee; }
@@ -904,25 +977,67 @@
     var b = document.createElement("button");
     b.type = "button"; b.className = "finish"; b.dataset.finish = f.id;
     b.setAttribute("aria-pressed", f.id === state.finish ? "true" : "false");
-    b.innerHTML = '<span class="swatch" style="background-color:'+f.color+'"></span>' + f.name + (f.fee ? '<span class="fee-note">+$' + FINISH_FEE + '</span>' : '');
+    b.innerHTML = '<span class="finish-color" style="background-color:' + f.color + '"></span>'
+      + '<span class="finish-text"><b>' + f.name + '</b>'
+      + '<span class="finish-cost">' + (f.fee ? '+$' + FINISH_FEE + ' ' + f.kind : 'Included') + '</span></span>';
     b.addEventListener("click", function(){ state.finish = f.id; markBuilt(); sync(); });
     finishRow.appendChild(b);
   });
+  var finishBtn = $("finishBtn"), finishPanel = $("finishPanel");
+  if (finishBtn && finishPanel){
+    finishBtn.addEventListener("click", function(){
+      var open = finishPanel.hidden;
+      finishPanel.hidden = !open;
+      finishBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
 
-  /* ---------- presets ---------- */
+  /* ---------- presets + Size panel ---------- */
   function markPreset(id){
     state.preset = id;
-    var chips = $("presetRow").querySelectorAll(".chip");
-    chips.forEach(function(c){ c.setAttribute("aria-pressed", c.dataset.size === id ? "true" : "false"); });
+    $("presetRow").querySelectorAll(".size-tile").forEach(function(c){
+      c.setAttribute("aria-pressed", c.dataset.size === id ? "true" : "false");
+    });
   }
   function applyPreset(id){
     var p = PRESETS[id]; if(!p) return;
+    state.isCustom = false;
     state.len = p.len; state.wid = p.wid; state.hei = p.hei; state.style = p.style;
+    state.preset = id;
+    enforceSizeStyle();
+    markPreset(state.preset); markBuilt(); sync();
+  }
+  /* Builder size tiles change footprint only — Style pills own the style,
+     so a valid tile never silently drops a Legged / Box choice. */
+  function applySizeTile(id){
+    var p = PRESETS[id]; if(!p) return;
+    if (isRestrictedStyle() && SMALL_PRESETS.indexOf(id) === -1) return;
+    state.isCustom = false;
+    state.len = p.len; state.wid = p.wid; state.hei = p.hei;
     markPreset(id); markBuilt(); sync();
   }
-  $("presetRow").querySelectorAll(".chip").forEach(function(c){
-    c.addEventListener("click", function(){ applyPreset(c.dataset.size); });
+  function enterCustomQuote(){
+    state.isCustom = true;
+    clampCustom();
+    markPreset("custom"); markBuilt(); sync();
+    if (location.hash === "#/quote" || location.hash === "#quote"){ renderRoute(); window.scrollTo(0,0); }
+    else { location.hash = "#/quote"; }
+  }
+  $("presetRow").querySelectorAll(".size-tile").forEach(function(c){
+    c.addEventListener("click", function(){
+      if (c.disabled) return;
+      if (c.dataset.size === "custom"){ enterCustomQuote(); }
+      else { applySizeTile(c.dataset.size); }
+    });
   });
+  var sizeBtn = $("sizeBtn"), sizePanel = $("sizePanel");
+  if (sizeBtn && sizePanel){
+    sizeBtn.addEventListener("click", function(){
+      var open = sizePanel.hidden;
+      sizePanel.hidden = !open;
+      sizeBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
   function goToBuilder(){
     if (location.hash === "#/build" || location.hash === "#build"){
       renderRoute();
@@ -933,38 +1048,45 @@
   }
   document.querySelectorAll("[data-preset]").forEach(function(btn){
     btn.addEventListener("click", function(){
+      if (btn.dataset.preset === "custom"){ enterCustomQuote(); return; }
       applyPreset(btn.dataset.preset);
       goToBuilder();
     });
   });
 
-  /* ---------- dimension steppers / inputs ---------- */
-  function setDim(key, val){
-    if (key === "len") state.len = clamp(val, 1, 16);
-    if (key === "wid") state.wid = clamp(val, 1, 8);
-    if (key === "hei") state.hei = clamp(Math.round(val), 8, 36);
-    markPreset("custom");
+  /* ---------- custom dimensions (quote page only) ---------- */
+  function setCustomDim(key, val){
+    if (key === "len") state.len = val;
+    if (key === "wid") state.wid = val;
+    if (key === "hei") state.hei = val;
+    clampCustom();
     markBuilt();
     sync();
   }
-  document.querySelectorAll("[data-step]").forEach(function(b){
+  document.querySelectorAll("[data-cstep]").forEach(function(b){
     b.addEventListener("click", function(){
-      var parts = b.dataset.step.split(":");
+      var parts = b.dataset.cstep.split(":");
       var key = parts[0], d = parseFloat(parts[1]);
       var cur = key === "len" ? state.len : key === "wid" ? state.wid : state.hei;
-      setDim(key, cur + d);
+      setCustomDim(key, cur + d);
     });
   });
-  [["lenIn","len"],["widIn","wid"],["heiIn","hei"]].forEach(function(pair){
-    $(pair[0]).addEventListener("change", function(){
+  [["cLenIn","len"],["cWidIn","wid"],["cHeiIn","hei"]].forEach(function(pair){
+    var el = $(pair[0]); if (!el) return;
+    el.addEventListener("change", function(){
       var v = parseFloat(this.value);
-      if (!isNaN(v)) setDim(pair[1], v); else sync();
+      if (!isNaN(v)) setCustomDim(pair[1], v); else sync();
     });
   });
 
   /* ---------- style ---------- */
   $("styleRow").querySelectorAll(".style-card").forEach(function(b){
-    b.addEventListener("click", function(){ state.style = b.dataset.style; markBuilt(); sync(); });
+    b.addEventListener("click", function(){
+      state.style = b.dataset.style;
+      enforceSizeStyle();
+      if (!state.isCustom) markPreset(state.preset);
+      markBuilt(); sync();
+    });
   });
 
   /* ---------- quantity ---------- */
@@ -973,6 +1095,7 @@
 
   /* ---------- Get Quote: tied to the build ---------- */
   function goToQuote(){
+    if (state.isCustom){ enterCustomQuote(); return; }
     if (!hasBuilt){
       quoteNoticePending = true;
       if (location.hash === "#/build" || location.hash === "#build"){ renderRoute(); }
@@ -992,17 +1115,21 @@
   /* ---------- handoff ---------- */
   function setHandoff(v){
     state.handoff = v;
-    $("handoffDelivery").setAttribute("aria-pressed", v === "Local delivery" ? "true" : "false");
-    $("handoffPickup").setAttribute("aria-pressed", v === "Pickup" ? "true" : "false");
+    [["handoffDelivery","Local delivery"],["handoffPickup","Pickup"],["bhDelivery","Local delivery"],["bhPickup","Pickup"]].forEach(function(pair){
+      var el = $(pair[0]); if (el) el.setAttribute("aria-pressed", v === pair[1] ? "true" : "false");
+    });
     sync();
   }
   $("handoffDelivery").addEventListener("click", function(){ setHandoff("Local delivery"); });
   $("handoffPickup").addEventListener("click", function(){ setHandoff("Pickup"); });
+  var bhD = $("bhDelivery"); if (bhD) bhD.addEventListener("click", function(){ setHandoff("Local delivery"); });
+  var bhP = $("bhPickup"); if (bhP) bhP.addEventListener("click", function(){ setHandoff("Pickup"); });
 
   /* ---------- derived values ---------- */
   function finishObj(){ return FINISHES.filter(function(f){ return f.id === state.finish; })[0]; }
   function buildName(){
-    return fmtFt(state.len) + "′ × " + fmtFt(state.wid) + "′ " + STYLES[state.style].name + " — " + finishObj().name;
+    var base = fmtFt(state.len) + "′ × " + fmtFt(state.wid) + "′ " + STYLES[state.style].name + " — " + finishObj().name;
+    return state.isCustom ? "Custom size · " + base : base;
   }
   function soil(){
     var cuft = state.len * state.wid * (state.hei / 12);
@@ -1012,7 +1139,7 @@
   function summaryLines(){
     var s = soil();
     var lines = [
-      "Planter: " + fmtFt(state.len) + " ft × " + fmtFt(state.wid) + " ft × " + state.hei + " in deep",
+      (state.isCustom ? "Planter (CUSTOM SIZE — quote only): " : "Planter: ") + fmtFt(state.len) + " ft × " + fmtFt(state.wid) + " ft × " + state.hei + " in deep",
       "Style: " + STYLES[state.style].name,
       "Finish: " + finishObj().name + finishFeeText(),
       "Quantity: " + state.qty,
@@ -1030,57 +1157,112 @@
   }
   function drawPreview(){
     var svg = $("pvSvg");
-    var W = 340, groundY = 196;
-    var frontW = clamp(state.len * 26, 90, 235);          // px for length
-    var depthX = clamp(state.wid * 11, 22, 62);            // iso offset for width
+    var W = 560, groundY = 302;
+    var frontW = clamp(state.len * 44, 150, 400);
+    var depthX = clamp(state.wid * 19, 38, 105);
     var depthY = depthX * 0.52;
-    var bodyH = clamp(state.hei * 2.1, 30, 74);            // px for depth/height
-    var legH = state.style === "legged" ? 44 : 0;
+    var bodyH = clamp(state.hei * 3.4, 48, 118);
+    var legH = state.style === "legged" ? 72 : 0;
     var x0 = (W - frontW - depthX) / 2, yTop = groundY - legH - bodyH - depthY;
-    var col = finishObj().color;
-    var front = shade(col, 0), side = shade(col, -34), top = shade(col, 22), post = shade(col, -16);
-    var soilCol = "#3d2c1c";
-    var parts = [];
-    // ground shadow
-    parts.push('<ellipse cx="' + (x0 + (frontW + depthX) / 2) + '" cy="' + (groundY + 8) + '" rx="' + ((frontW + depthX) / 2 + 8) + '" ry="9" fill="rgba(40,50,25,.25)"/>');
-    // legs
-    if (legH){
-      var lw = 11;
-      var legY = groundY - legH;
-      parts.push('<rect x="' + (x0 + 4) + '" y="' + legY + '" width="' + lw + '" height="' + legH + '" fill="' + post + '"/>');
-      parts.push('<rect x="' + (x0 + frontW - lw - 4) + '" y="' + legY + '" width="' + lw + '" height="' + legH + '" fill="' + post + '"/>');
-      parts.push('<rect x="' + (x0 + depthX + 2) + '" y="' + (legY - depthY + 6) + '" width="' + lw + '" height="' + (legH - 4) + '" fill="' + side + '"/>');
-      parts.push('<rect x="' + (x0 + frontW + depthX - lw - 6) + '" y="' + (legY - depthY + 6) + '" width="' + lw + '" height="' + (legH - 4) + '" fill="' + side + '"/>');
-    }
     var yBody = yTop + depthY;
-    // side face
-    parts.push('<polygon points="' + (x0 + frontW) + ',' + yBody + ' ' + (x0 + frontW + depthX) + ',' + yTop + ' ' + (x0 + frontW + depthX) + ',' + (yTop + bodyH) + ' ' + (x0 + frontW) + ',' + (yBody + bodyH) + '" fill="' + side + '"/>');
-    // front face
-    parts.push('<rect x="' + x0 + '" y="' + yBody + '" width="' + frontW + '" height="' + bodyH + '" fill="' + front + '"/>');
-    // plank lines on front
-    var planks = Math.max(2, Math.round(bodyH / 16));
-    for (var i = 1; i < planks; i++){
-      var py = yBody + (bodyH / planks) * i;
-      parts.push('<line x1="' + x0 + '" y1="' + py + '" x2="' + (x0 + frontW) + '" y2="' + py + '" stroke="rgba(0,0,0,.18)" stroke-width="1.4"/>');
+    var col = finishObj().color;
+    var front = shade(col, 0), frontD = shade(col, -22), side = shade(col, -38), sideD = shade(col, -58), top = shade(col, 26), post = shade(col, -18), postD = shade(col, -36);
+    var parts = [];
+    parts.push('<defs>'
+      + '<linearGradient id="pvFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + shade(col, 18) + '"/><stop offset=".55" stop-color="' + front + '"/><stop offset="1" stop-color="' + frontD + '"/></linearGradient>'
+      + '<linearGradient id="pvSide" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + shade(col, -18) + '"/><stop offset="1" stop-color="' + sideD + '"/></linearGradient>'
+      + '<linearGradient id="pvTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + shade(col, 40) + '"/><stop offset="1" stop-color="' + top + '"/></linearGradient>'
+      + '<radialGradient id="pvSoil" cx=".5" cy=".4" r=".85"><stop offset="0" stop-color="#5a4030"/><stop offset=".6" stop-color="#43301f"/><stop offset="1" stop-color="#2e2013"/></radialGradient>'
+      + '<radialGradient id="pvShadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="rgba(35,45,20,.42)"/><stop offset=".7" stop-color="rgba(35,45,20,.20)"/><stop offset="1" stop-color="rgba(35,45,20,0)"/></radialGradient>'
+      + '</defs>');
+    // soft ground shadow
+    parts.push('<ellipse cx="' + (x0 + (frontW + depthX) / 2) + '" cy="' + (groundY + 10) + '" rx="' + ((frontW + depthX) / 2 + 26) + '" ry="17" fill="url(#pvShadow)"/>');
+    // legs with shading + foot shadow line
+    if (legH){
+      var lw = 17, legY = groundY - legH;
+      var legXs = [x0 + 6, x0 + frontW - lw - 6, x0 + depthX + 3, x0 + frontW + depthX - lw - 9];
+      var legYs = [legY, legY, legY - depthY + 9, legY - depthY + 9];
+      var legHs = [legH, legH, legH - 6, legH - 6];
+      var legFills = [post, post, side, side];
+      for (var li = 0; li < 4; li++){
+        parts.push('<rect x="' + legXs[li] + '" y="' + legYs[li] + '" width="' + lw + '" height="' + legHs[li] + '" fill="' + legFills[li] + '"/>');
+        parts.push('<rect x="' + legXs[li] + '" y="' + legYs[li] + '" width="4" height="' + legHs[li] + '" fill="rgba(255,255,255,.14)"/>');
+        parts.push('<path d="M' + (legXs[li] + 3) + ' ' + (legYs[li] + 8) + ' q3 ' + (legHs[li] * .4) + ' 0 ' + (legHs[li] * .8) + '" stroke="rgba(0,0,0,.13)" stroke-width="1.6" fill="none"/>');
+      }
+      // lower stretcher between front legs
+      parts.push('<rect x="' + (x0 + 10) + '" y="' + (groundY - 20) + '" width="' + (frontW - 20) + '" height="8" fill="' + postD + '"/>');
     }
-    // corner posts front
-    parts.push('<rect x="' + x0 + '" y="' + (yBody - 4) + '" width="10" height="' + (bodyH + 4) + '" fill="' + post + '"/>');
-    parts.push('<rect x="' + (x0 + frontW - 10) + '" y="' + (yBody - 4) + '" width="10" height="' + (bodyH + 4) + '" fill="' + post + '"/>');
-    // top face (soil inset)
-    parts.push('<polygon points="' + x0 + ',' + yBody + ' ' + (x0 + depthX) + ',' + yTop + ' ' + (x0 + frontW + depthX) + ',' + yTop + ' ' + (x0 + frontW) + ',' + yBody + '" fill="' + top + '"/>');
-    var inset = 7;
-    var ix0 = x0 + inset, iyB = yBody - inset * 0.4, ixT = yTop + inset * 0.55;
-    parts.push('<polygon points="' + ix0 + ',' + iyB + ' ' + (x0 + depthX + inset * 0.4) + ',' + ixT + ' ' + (x0 + frontW + depthX - inset) + ',' + ixT + ' ' + (x0 + frontW - inset) + ',' + iyB + '" fill="' + soilCol + '"/>');
-    // simple green planting blobs on the soil
-    var greens = ["#4a7c3a", "#5d9047", "#3f7031"];
-    var nPlants = clamp(Math.round(state.len * state.wid / 6), 2, 8);
+    // side + front faces with gradients
+    parts.push('<polygon points="' + (x0 + frontW) + ',' + yBody + ' ' + (x0 + frontW + depthX) + ',' + yTop + ' ' + (x0 + frontW + depthX) + ',' + (yTop + bodyH) + ' ' + (x0 + frontW) + ',' + (yBody + bodyH) + '" fill="url(#pvSide)"/>');
+    parts.push('<rect x="' + x0 + '" y="' + yBody + '" width="' + frontW + '" height="' + bodyH + '" fill="url(#pvFront)"/>');
+    // side planks: slanted seams + grain
+    var planks = Math.max(2, Math.round(bodyH / 26));
+    var ph = bodyH / planks, k;
+    for (k = 0; k < planks; k++){
+      var sy = yBody + ph * k;
+      if (k > 0) parts.push('<line x1="' + (x0 + frontW) + '" y1="' + sy + '" x2="' + (x0 + frontW + depthX) + '" y2="' + (sy - depthY) + '" stroke="rgba(0,0,0,.25)" stroke-width="2"/>');
+      parts.push('<path d="M' + (x0 + frontW + 5) + ' ' + (sy + ph * .45) + ' q' + (depthX * .45) + ' ' + (-depthY * .3) + ' ' + (depthX - 7) + ' ' + (-depthY * .82) + '" stroke="rgba(0,0,0,.10)" stroke-width="1.5" fill="none"/>');
+    }
+    // front planks: seams, wavy grain, knots, per-plank highlight
+    for (k = 0; k < planks; k++){
+      var fy = yBody + ph * k;
+      if (k > 0) parts.push('<line x1="' + x0 + '" y1="' + fy + '" x2="' + (x0 + frontW) + '" y2="' + fy + '" stroke="rgba(0,0,0,.26)" stroke-width="2"/>');
+      parts.push('<rect x="' + x0 + '" y="' + fy + '" width="' + frontW + '" height="3" fill="rgba(255,255,255,.13)"/>');
+      for (var gLine = 0; gLine < 2; gLine++){
+        var gy = fy + ph * (0.32 + gLine * 0.34);
+        parts.push('<path d="M' + (x0 + 8) + ' ' + gy + ' q' + (frontW * .25) + ' ' + ((gLine ? -2.4 : 2.4)) + ' ' + (frontW * .5) + ' 0 t' + (frontW * .5 - 14) + ' ' + ((gLine ? 1.6 : -1.6)) + '" stroke="rgba(60,30,5,' + (gLine ? .10 : .14) + ')" stroke-width="1.5" fill="none"/>');
+      }
+      var kx = x0 + frontW * (0.22 + (k % 3) * 0.27), ky = fy + ph * .55;
+      parts.push('<ellipse cx="' + kx + '" cy="' + ky + '" rx="4.6" ry="2.8" fill="none" stroke="rgba(50,25,5,.22)" stroke-width="1.4"/>');
+      parts.push('<circle cx="' + kx + '" cy="' + ky + '" r="1.3" fill="rgba(50,25,5,.28)"/>');
+      // screw heads at plank ends
+      parts.push('<circle cx="' + (x0 + frontW - 20) + '" cy="' + (fy + ph / 2) + '" r="2.1" fill="rgba(0,0,0,.30)"/>');
+      parts.push('<circle cx="' + (x0 + 20) + '" cy="' + (fy + ph / 2) + '" r="2.1" fill="rgba(0,0,0,.30)"/>');
+    }
+    // enclosed bottom hint for planter box style
+    if (state.style === "box"){
+      parts.push('<rect x="' + x0 + '" y="' + (yBody + bodyH - 7) + '" width="' + frontW + '" height="7" fill="rgba(0,0,0,.20)"/>');
+    }
+    // corner posts with bevel highlight + shadow edge
+    [[x0, front], [x0 + frontW - 15, frontD]].forEach(function(pr){
+      parts.push('<rect x="' + pr[0] + '" y="' + (yBody - 6) + '" width="15" height="' + (bodyH + 6) + '" fill="' + post + '"/>');
+      parts.push('<rect x="' + pr[0] + '" y="' + (yBody - 6) + '" width="4" height="' + (bodyH + 6) + '" fill="rgba(255,255,255,.16)"/>');
+      parts.push('<rect x="' + (pr[0] + 11) + '" y="' + (yBody - 6) + '" width="4" height="' + (bodyH + 6) + '" fill="rgba(0,0,0,.16)"/>');
+    });
+    // top rim + soil
+    parts.push('<polygon points="' + x0 + ',' + yBody + ' ' + (x0 + depthX) + ',' + yTop + ' ' + (x0 + frontW + depthX) + ',' + yTop + ' ' + (x0 + frontW) + ',' + yBody + '" fill="url(#pvTop)"/>');
+    parts.push('<polyline points="' + x0 + ',' + yBody + ' ' + (x0 + depthX) + ',' + yTop + ' ' + (x0 + frontW + depthX) + ',' + yTop + '" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2.4"/>');
+    var inset = 11;
+    var ix0 = x0 + inset, iyB = yBody - inset * 0.38, ixT = yTop + inset * 0.55, iFrontW = frontW - inset * 2, iDepthX = depthX - inset * 0.6;
+    parts.push('<polygon points="' + ix0 + ',' + iyB + ' ' + (ix0 + iDepthX) + ',' + ixT + ' ' + (ix0 + iFrontW + iDepthX) + ',' + ixT + ' ' + (ix0 + iFrontW) + ',' + iyB + '" fill="url(#pvSoil)"/>');
+    // soil texture: deterministic speckles + small mounds
+    var seed = Math.round(state.len * 7 + state.wid * 13 + state.hei);
+    function rnd(n){ var v = Math.sin(seed * 31.7 + n * 47.3) * 43758.5453; return v - Math.floor(v); }
+    for (var d = 0; d < 42; d++){
+      var dx = ix0 + 6 + rnd(d) * (iFrontW - 10);
+      var dy = ixT + 3 + rnd(d + 60) * (iyB - ixT - 4) + (dx - ix0) / iFrontW * 2;
+      parts.push('<circle cx="' + dx.toFixed(1) + '" cy="' + dy.toFixed(1) + '" r="' + (0.9 + rnd(d + 120) * 1.5).toFixed(1) + '" fill="' + (d % 3 ? "rgba(0,0,0,.28)" : "rgba(190,150,105,.35)") + '"/>');
+    }
+    for (var m = 0; m < 6; m++){
+      var mx = ix0 + 12 + rnd(m + 200) * (iFrontW - 24), my = ixT + 4 + rnd(m + 260) * (iyB - ixT - 6);
+      parts.push('<ellipse cx="' + mx.toFixed(1) + '" cy="' + my.toFixed(1) + '" rx="' + (7 + rnd(m + 300) * 6).toFixed(1) + '" ry="2.6" fill="rgba(0,0,0,.16)"/>');
+    }
+    // greenery: leafy clusters rising from the soil
+    var greens = ["#4a7c3a", "#5d9047", "#3f7031", "#6aa653"];
+    var nPlants = clamp(Math.round(state.len * state.wid / 5), 3, 9);
     for (var p = 0; p < nPlants; p++){
       var t = nPlants === 1 ? 0.5 : p / (nPlants - 1);
-      var cx = ix0 + 14 + t * (frontW - 28);
-      var cy = ixT + (iyB - ixT) * 0.55 + ((p % 2) ? 2.5 : -2);
-      var r = 7 + (p % 3) * 2;
-      parts.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + greens[p % 3] + '"/>');
-      parts.push('<circle cx="' + (cx + r * 0.55) + '" cy="' + (cy - r * 0.4) + '" r="' + (r * 0.62) + '" fill="' + greens[(p + 1) % 3] + '"/>');
+      var cx = ix0 + 20 + t * (iFrontW - 36) + (rnd(p + 400) - .5) * 8;
+      var cy = ixT + (iyB - ixT) * 0.55 + ((p % 2) ? 3.5 : -2.5);
+      var s = 0.85 + rnd(p + 500) * 0.5;
+      parts.push('<path d="M' + cx + ' ' + cy + ' q1 -13 ' + (-2 + rnd(p + 600) * 4).toFixed(1) + ' -20" stroke="#3c662e" stroke-width="2.4" fill="none"/>');
+      var leafAngles = [-52, -26, 0, 28, 54];
+      for (var lf = 0; lf < leafAngles.length; lf++){
+        var la = leafAngles[lf], lr = (10 + rnd(p * 7 + lf + 700) * 5) * s;
+        parts.push('<ellipse cx="' + cx + '" cy="' + (cy - 16 * s) + '" rx="' + lr.toFixed(1) + '" ry="' + (lr * 0.42).toFixed(1) + '" fill="' + greens[(p + lf) % 4] + '" transform="rotate(' + la + ' ' + cx + ' ' + (cy - 16 * s) + ')"/>');
+      }
+      parts.push('<circle cx="' + cx + '" cy="' + (cy - 17 * s) + '" r="' + (5.2 * s).toFixed(1) + '" fill="' + greens[(p + 1) % 4] + '"/>');
+      if (p % 3 === 1) parts.push('<circle cx="' + (cx + 6) + '" cy="' + (cy - 21 * s) + '" r="2.6" fill="#c8452c"/><circle cx="' + (cx - 7) + '" cy="' + (cy - 13 * s) + '" r="2.2" fill="#d2543a"/>');
     }
     var html = parts.join("");
     svg.innerHTML = html;
@@ -1089,15 +1271,41 @@
 
   /* ---------- sync all readouts ---------- */
   function sync(){
-    $("lenIn").value = fmtFt(state.len);
-    $("widIn").value = fmtFt(state.wid);
-    $("heiIn").value = state.hei;
+    // custom-dimension inputs (quote page only)
+    var cL = $("cLenIn"), cW = $("cWidIn"), cH = $("cHeiIn");
+    if (cL){ cL.value = fmtFt(state.len); cL.max = isRestrictedStyle() ? 4 : 12; }
+    if (cW){ cW.value = fmtFt(state.wid); }
+    if (cH){ cH.value = state.hei; }
+    var cLU = $("cLenUnit"); if (cLU) cLU.textContent = isRestrictedStyle() ? "2–4 ft" : "2–12 ft";
+    var cd = $("customDims"); if (cd) cd.hidden = !state.isCustom;
+    var capN = $("customCapNote"); if (capN) capN.hidden = !(state.isCustom && isRestrictedStyle());
+    var qi = $("quoteIntro");
+    if (qi) qi.textContent = state.isCustom
+      ? "Custom size — quote only. Add your exact dims below; they go with your request."
+      : "This is the planter you just designed. Check it, add your details, and send the request.";
+    // Size button label + tile availability (3x6 stays Raised-only; all
+    // large tiles off for Legged / Box)
+    var sbv = $("sizeBtnValue");
+    if (sbv) sbv.textContent = state.isCustom ? "Custom size" : (PRESET_LABELS[state.preset] || (fmtFt(state.len) + "×" + fmtFt(state.wid)));
+    var restricted = isRestrictedStyle();
+    $("presetRow").querySelectorAll(".size-tile").forEach(function(c){
+      var off = restricted && c.dataset.size !== "custom" && SMALL_PRESETS.indexOf(c.dataset.size) === -1;
+      c.disabled = !!off;
+      c.setAttribute("aria-disabled", off ? "true" : "false");
+      if (off) c.title = "Raised bed only — Legged / box max 4 × 4 ft";
+      else c.removeAttribute("title");
+    });
+    var scn = $("sizeCapNote"); if (scn) scn.hidden = !restricted;
     $("styleRow").querySelectorAll(".style-card").forEach(function(b){
       b.setAttribute("aria-pressed", b.dataset.style === state.style ? "true" : "false");
     });
     finishRow.querySelectorAll(".finish").forEach(function(b){
       b.setAttribute("aria-pressed", b.dataset.finish === state.finish ? "true" : "false");
     });
+    var fbv = $("finishBtnValue");
+    if (fbv) fbv.textContent = finishObj().name + (finishFeeApplies() ? " · +$" + FINISH_FEE : "");
+    var fbs = $("finishBtnSwatch");
+    if (fbs) fbs.style.backgroundColor = finishObj().color;
     $("qtyOut").textContent = state.qty;
 
     var s = soil();
@@ -1197,7 +1405,7 @@
     var builder = isBuilderHash(h);
     var quote = isQuoteHash(h);
     var about = isAboutHash(h);
-    if (quote && !hasBuilt){
+    if (quote && !hasBuilt && !state.isCustom){
       quoteNoticePending = true;
       location.hash = "#/build";
       return;
