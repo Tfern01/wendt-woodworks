@@ -201,18 +201,7 @@
     background-image:repeating-linear-gradient(0deg, rgba(0,0,0,.10) 0 2px, transparent 2px 8px);
   }
   .finish[aria-pressed="true"]{border-color:var(--green);box-shadow:0 0 0 2px var(--green) inset}
-  .addon-row{display:flex;flex-wrap:wrap;gap:7px}
-  .addon{
-    border:1.5px solid var(--line);background:var(--surface);color:var(--ink);
-    border-radius:10px;padding:7px 11px;min-height:38px;font-weight:600;font-size:.88rem;
-    display:inline-flex;align-items:center;gap:7px;
-  }
-  .addon .box{
-    width:17px;height:17px;border-radius:5px;border:2px solid var(--ink-soft);flex:none;
-    display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:.75rem;line-height:1;
-  }
-  .addon[aria-pressed="true"]{border-color:var(--green)}
-  .addon[aria-pressed="true"] .box{background:var(--green);border-color:var(--green)}
+  .finish .fee-note{margin-left:auto;font-size:.8rem;font-weight:700;color:var(--cedar);white-space:nowrap}
   .qty-ctl{display:flex;align-items:center;gap:0;width:max-content}
   .qty-ctl button{
     width:40px;min-height:38px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);
@@ -728,13 +717,7 @@
         </div>
 
         <div class="ctl-group">
-          <h3>4 · Add-ons</h3>
-          
-          <div class="addon-row" id="addonRow" role="group" aria-label="Add-ons"></div>
-        </div>
-
-        <div class="ctl-group">
-          <h3>5 · How many?</h3>
+          <h3>4 · How many?</h3>
           <div class="qty-ctl">
             <button type="button" id="qtyMinus" aria-label="One fewer">−</button>
             <output id="qtyOut" aria-live="polite">1</output>
@@ -759,7 +742,6 @@
         <ul class="pv-list">
           <li><span>Style</span><span id="pvStyle">—</span></li>
           <li><span>Finish</span><span id="pvFinish">—</span></li>
-          <li><span>Add-ons</span><span id="pvAddons">—</span></li>
           <li><span>Quantity</span><span id="pvQty">—</span></li>
           <li><span>Handoff</span><span id="pvHandoff">—</span></li>
           <li><span>Soil to fill</span><span id="pvSoil">—</span></li>
@@ -872,18 +854,10 @@
   var FINISHES = [
     { id:"cedar",   name:"Natural cedar",      color:"#b5793f" },
     { id:"pine",    name:"Natural pine",       color:"#dbbd85" },
-    { id:"gray",    name:"Weathered gray",     color:"#9b968c" },
-    { id:"walnut",  name:"Dark walnut stain",  color:"#5d3d26" },
-    { id:"black",   name:"Black stain",        color:"#2e2c2a" },
-    { id:"white",   name:"Painted white",      color:"#f0ece1" },
-    { id:"raw",     name:"Unfinished",         color:"#e3cda3" }
-  ];
-  var ADDONS = [
-    { id:"liner",    name:"Landscape liner" },
-    { id:"drainage", name:"Drainage holes" },
-    { id:"casters",  name:"Casters / wheels" },
-    { id:"trellis",  name:"Trellis" },
-    { id:"caprail",  name:"Top trim / cap rail" }
+    { id:"gray",    name:"Painted weathered gray", color:"#9b968c", fee:true, kind:"paint" },
+    { id:"walnut",  name:"Dark walnut stain",  color:"#5d3d26", fee:true, kind:"stain" },
+    { id:"black",   name:"Painted black",      color:"#2e2c2a", fee:true, kind:"paint" },
+    { id:"white",   name:"Painted white",      color:"#f0ece1", fee:true, kind:"paint" }
   ];
   var STYLES = {
     raised:{ name:"Raised bed",    blurb:"open bottom" },
@@ -905,12 +879,14 @@
     len:8, wid:4, hei:18,
     style:"raised",
     finish:"cedar",
-    addons:{},
     qty:1,
     preset:"4x8",
     handoff:"Local delivery"
   };
   var DELIVERY_FEE = 50;
+  var FINISH_FEE = 40;
+  function finishFeeApplies(){ return !!finishObj().fee; }
+  function finishFeeText(){ return finishFeeApplies() ? " — +$" + FINISH_FEE + " " + finishObj().kind : ""; }
   function isDelivery(){ return state.handoff === "Local delivery"; }
   function handoffSummary(){ return isDelivery() ? "Local delivery — +$" + DELIVERY_FEE + " delivery" : "Pickup — free"; }
   function deliveryLine(){ return isDelivery() ? "Delivery: +$" + DELIVERY_FEE + " delivery" : "Delivery: Pickup — free"; }
@@ -922,28 +898,15 @@
   function clamp(v,min,max){ return Math.min(max, Math.max(min, v)); }
   function fmtFt(v){ return (Math.round(v*2)/2).toString().replace(/\.0$/,""); }
 
-  /* ---------- build finish + addon controls ---------- */
+  /* ---------- build finish controls ---------- */
   var finishRow = $("finishRow");
   FINISHES.forEach(function(f){
     var b = document.createElement("button");
     b.type = "button"; b.className = "finish"; b.dataset.finish = f.id;
     b.setAttribute("aria-pressed", f.id === state.finish ? "true" : "false");
-    b.innerHTML = '<span class="swatch" style="background-color:'+f.color+'"></span>' + f.name;
+    b.innerHTML = '<span class="swatch" style="background-color:'+f.color+'"></span>' + f.name + (f.fee ? '<span class="fee-note">+$' + FINISH_FEE + '</span>' : '');
     b.addEventListener("click", function(){ state.finish = f.id; markBuilt(); sync(); });
     finishRow.appendChild(b);
-  });
-  var addonRow = $("addonRow");
-  ADDONS.forEach(function(a){
-    var b = document.createElement("button");
-    b.type = "button"; b.className = "addon"; b.dataset.addon = a.id;
-    b.setAttribute("aria-pressed","false");
-    b.innerHTML = '<span class="box"></span>' + a.name;
-    b.addEventListener("click", function(){
-      state.addons[a.id] = !state.addons[a.id];
-      if (a.id === "casters" && state.addons[a.id] && state.style !== "legged") state.style = "legged";
-      markBuilt(); sync();
-    });
-    addonRow.appendChild(b);
   });
 
   /* ---------- presets ---------- */
@@ -1038,9 +1001,6 @@
 
   /* ---------- derived values ---------- */
   function finishObj(){ return FINISHES.filter(function(f){ return f.id === state.finish; })[0]; }
-  function addonNames(){
-    return ADDONS.filter(function(a){ return state.addons[a.id]; }).map(function(a){ return a.name; });
-  }
   function buildName(){
     return fmtFt(state.len) + "′ × " + fmtFt(state.wid) + "′ " + STYLES[state.style].name + " — " + finishObj().name;
   }
@@ -1054,8 +1014,7 @@
     var lines = [
       "Planter: " + fmtFt(state.len) + " ft × " + fmtFt(state.wid) + " ft × " + state.hei + " in deep",
       "Style: " + STYLES[state.style].name,
-      "Finish: " + finishObj().name,
-      "Add-ons: " + (addonNames().length ? addonNames().join(", ") : "None"),
+      "Finish: " + finishObj().name + finishFeeText(),
       "Quantity: " + state.qty,
       "Soil to fill: about " + s.cuft.toFixed(1).replace(/\.0$/,"") + " cu ft (roughly " + s.bags + " × 1.5 cu ft bags)",
       deliveryLine()
@@ -1123,21 +1082,6 @@
       parts.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + greens[p % 3] + '"/>');
       parts.push('<circle cx="' + (cx + r * 0.55) + '" cy="' + (cy - r * 0.4) + '" r="' + (r * 0.62) + '" fill="' + greens[(p + 1) % 3] + '"/>');
     }
-    // trellis add-on
-    if (state.addons.trellis){
-      var tx = x0 + frontW + depthX - 6, ty = yTop;
-      parts.push('<g stroke="' + post + '" stroke-width="4" stroke-linecap="round">'
-        + '<line x1="' + (tx - 6) + '" y1="' + ty + '" x2="' + (tx - 6) + '" y2="' + (ty - 52) + '"/>'
-        + '<line x1="' + (tx - 42) + '" y1="' + (ty - 8) + '" x2="' + (tx - 42) + '" y2="' + (ty - 58) + '"/>'
-        + '<line x1="' + (tx - 42) + '" y1="' + (ty - 56) + '" x2="' + (tx - 6) + '" y2="' + (ty - 50) + '"/>'
-        + '<line x1="' + (tx - 42) + '" y1="' + (ty - 34) + '" x2="' + (tx - 6) + '" y2="' + (ty - 28) + '"/></g>');
-    }
-    // casters
-    if (state.addons.casters){
-      [x0 + 14, x0 + frontW - 14].forEach(function(cx){
-        parts.push('<circle cx="' + cx + '" cy="' + (groundY + 3) + '" r="6.5" fill="#33302c"/><circle cx="' + cx + '" cy="' + (groundY + 3) + '" r="2.6" fill="#8f8a80"/>');
-      });
-    }
     var html = parts.join("");
     svg.innerHTML = html;
     var qs = $("qsSvg"); if (qs) qs.innerHTML = html;
@@ -1154,11 +1098,6 @@
     finishRow.querySelectorAll(".finish").forEach(function(b){
       b.setAttribute("aria-pressed", b.dataset.finish === state.finish ? "true" : "false");
     });
-    addonRow.querySelectorAll(".addon").forEach(function(b){
-      var on = !!state.addons[b.dataset.addon];
-      b.setAttribute("aria-pressed", on ? "true" : "false");
-      b.querySelector(".box").textContent = on ? "✓" : "";
-    });
     $("qtyOut").textContent = state.qty;
 
     var s = soil();
@@ -1166,8 +1105,7 @@
     $("pvName").textContent = name;
     $("pvDims").textContent = fmtFt(state.len) + " ft long × " + fmtFt(state.wid) + " ft wide × " + state.hei + "″ deep";
     $("pvStyle").textContent = STYLES[state.style].name + " (" + STYLES[state.style].blurb + ")";
-    $("pvFinish").textContent = finishObj().name;
-    $("pvAddons").textContent = addonNames().length ? addonNames().join(", ") : "None";
+    $("pvFinish").textContent = finishObj().name + (finishFeeApplies() ? " (+$" + FINISH_FEE + ")" : "");
     $("pvQty").textContent = state.qty + (state.qty > 1 ? " planters" : " planter");
     var pvH = $("pvHandoff"); if (pvH) pvH.textContent = handoffSummary();
     $("pvSoil").textContent = "≈ " + s.cuft.toFixed(1).replace(/\.0$/, "") + " cu ft";
@@ -1178,7 +1116,7 @@
     $("qsText").textContent = summaryLines().join("\n");
     var qd = $("qsDims"); if (qd) qd.textContent = $("pvDims").textContent;
     var cqN = $("cqName"); if (cqN) cqN.textContent = name;
-    var cqS = $("cqSummary"); if (cqS) cqS.textContent = fmtFt(state.len) + " ft × " + fmtFt(state.wid) + " ft × " + state.hei + "″ deep · Qty " + state.qty + " · Soil ≈ " + s.cuft.toFixed(1).replace(/\.0$/, "") + " cu ft · " + (isDelivery() ? "+$" + DELIVERY_FEE + " delivery" : "Pickup — free");
+    var cqS = $("cqSummary"); if (cqS) cqS.textContent = fmtFt(state.len) + " ft × " + fmtFt(state.wid) + " ft × " + state.hei + "″ deep · Qty " + state.qty + " · Soil ≈ " + s.cuft.toFixed(1).replace(/\.0$/, "") + " cu ft" + (finishFeeApplies() ? " · +$" + FINISH_FEE + " " + finishObj().kind : "") + " · " + (isDelivery() ? "+$" + DELIVERY_FEE + " delivery" : "Pickup — free");
   }
 
   /* ---------- quote form ---------- */
