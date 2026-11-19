@@ -390,6 +390,9 @@
   .back-link{display:inline-flex;align-items:center;gap:7px;color:var(--ink);text-decoration:none;font-weight:600;font-size:.92rem;padding:4px;min-height:32px}
   .back-link:hover{color:var(--green);text-decoration:underline;text-underline-offset:3px}
   .builder-top .bt-label{font-family:"Bitter",serif;font-weight:700;font-size:.95rem;color:var(--ink-soft)}
+  .builder-top.bt-center .wrap{display:grid;grid-template-columns:1fr auto 1fr}
+  .builder-top.bt-center .back-link{justify-self:start}
+  .builder-top.bt-center .bt-label{justify-self:center;text-align:center}
   /* ---------- planter carousel ---------- */
   .carousel-shell{position:relative}
   .carousel-track{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:2px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -646,18 +649,14 @@
 </section>
 
 <!-- ================= CUSTOMIZER (own page) ================= -->
-<div class="builder-top" data-page="builder" hidden>
+<div class="builder-top bt-center" data-page="builder" hidden>
   <div class="wrap">
-    <a class="back-link" href="#planters">← Back to Products</a>
-    <span class="bt-label">Custom builder</span>
+    <a class="back-link" href="#/">← Back</a>
+    <span class="bt-label">Custom Builder</span>
   </div>
 </div>
 <section id="build" data-page="builder" hidden>
   <div class="wrap">
-    <div class="section-head">
-      <h2>Build yours</h2>
-      <p>Design it below, then press Get Quote — your exact build goes with you.</p>
-    </div>
     <div class="build-notice" id="buildNotice" hidden>Design your planter first — pick a size, style, and finish below, then press <b>Get Quote</b> and this exact build will be attached to your request.</div>
 
     <div class="builder">
