@@ -65,22 +65,22 @@
   }
   .site-brand:hover{color:var(--green)}
   .menu-panel{
-    position:absolute;top:calc(100% + 6px);left:16px;right:16px;z-index:60;
-    width:auto;padding:6px;
+    position:absolute;top:calc(100% + 6px);left:16px;z-index:60;
+    width:min(260px,calc(100vw - 32px));padding:6px;
     background:var(--surface);border:1px solid var(--line);border-radius:12px;
     box-shadow:var(--shadow);
-    display:flex;flex-direction:row;justify-content:space-between;align-items:stretch;gap:4px;
+    display:flex;flex-direction:column;align-items:stretch;gap:2px;
   }
   .menu-panel a{
     color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem;
     padding:10px 12px;border-radius:8px;min-height:40px;display:flex;align-items:center;
-    flex:1 1 0;justify-content:center;text-align:center;white-space:nowrap;
+    justify-content:flex-start;text-align:left;white-space:nowrap;
   }
   .menu-panel a:hover{background:var(--surface-2)}
   @media (max-width:560px){
     .topnav .wrap{gap:8px}
     .site-brand{font-size:1.02rem}
-    .menu-panel{left:10px;right:10px}
+    .menu-panel{left:10px}
   }
 
   /* ---------- hero ---------- */
